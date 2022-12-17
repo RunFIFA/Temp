@@ -19,3 +19,4 @@ jobs:
         cp ../arm64-kernel-configs/config-6.0.2-flippy-78+  ./.config
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j12
+
