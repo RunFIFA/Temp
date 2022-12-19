@@ -22,7 +22,6 @@ libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-d
 mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils \
 rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev \
 gcc-aarch64-linux-gnu ncurses-dev qemu
-
 # 安装qemu
 log "安装qemu"
 if [ ! -e qemu-aarch64-static.tar.gz ]; then
@@ -51,6 +50,7 @@ if [ ! -e ubuntu-base-22.04-base-arm64.tar.gz ]; then
   wget https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-arm64.tar.gz
 fi
 
+
 # 2.编译内核
 log "------------------编译内核开始------------------"
 cd linux-6.0.y/
@@ -76,7 +76,6 @@ mkdir rootfs/lib/modules
 cp -a modules/lib/modules/${module} rootfs/lib/modules/
 mkdir rootfs/host
 cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
-
 # 进入子系统部分
 ######################################
 log "进入子系统"
@@ -97,7 +96,6 @@ mkimage -A arm64 -O linux -T ramdisk -C none -a 0 -e 0 -n uInitrd -d /boot/initr
 exit
 bash ../chmout.sh -u ./rootfs/
 ######################################
-
 # 打包根文件系统 boot,header,modules,dtb
 log "打包根文件系统 boot,header,modules,dtb"
 mkdir -p output/{boot,header,modules,dtb}
@@ -124,19 +122,19 @@ tar -zcf ../header-${module}.tar.gz *
 cd ../../
 
 
-# 3.编译openwrt根文件系统
+# 4.编译openwrt根文件系统
 log "------------------openwrt根文件系统------------------"
 cd ../lede/
 export FORCE_UNSAFE_CONFIGURE=1
 ./scripts/feeds update -a
 ./scripts/feeds install -a
-#make menuconfig
+#此处需要手动配置
+#make -j1  V=s menuconfig
 make -j1  V=s defconfig
 make -j8  V=s download
 make -j1  V=s
 cd ../
-
-# #二次编译：
+#二次编译：
 # cd lede
 # git pull
 # ./scripts/feeds update -a
@@ -145,16 +143,15 @@ cd ../
 # make download -j8
 # export FORCE_UNSAFE_CONFIGURE=1
 # make V=s -j$(nproc)
-
-# #如果需要重新配置：
+#如果需要重新配置：
 # rm -rf ./tmp && rm -rf .config
 # make menuconfig
 # export FORCE_UNSAFE_CONFIGURE=1
 # make V=s -j$(nproc)
 
 
-
-# 3.开始编译openwrt
+# 5.开始编译openwrt
+#编译前需要修改配置文件
 # sudo cp -a openwrt_packit /opt/openwrt_packit
 # sudo cp lede/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz /opt/openwrt_packit/
 # sudo mkdir /opt/kernel
