@@ -1,7 +1,5 @@
 name: Build Kernel
 on: push
-    branches:
-      - main
 jobs:
   build:
     runs-on: ubuntu-22.04
