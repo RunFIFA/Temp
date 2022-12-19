@@ -1,4 +1,4 @@
-name: Build OpenWrt
+name: Build Kernel
 on: push
 jobs:
   build:
