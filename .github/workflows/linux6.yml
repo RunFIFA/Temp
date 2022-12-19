@@ -24,7 +24,7 @@ jobs:
         #log "安装qemu"
         wget https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-5/qemu-aarch64-static.tar.gz
         tar xzvf qemu-aarch64-static.tar.gz
-        cp qemu-aarch64-static /usr/bin/
+        sudo cp qemu-aarch64-static /usr/bin/
         sudo chmod +x /usr/bin/qemu-aarch64-static
     - name: Download enviroment
       run: |
@@ -34,15 +34,11 @@ jobs:
         git clone https://github.com/unifreq/openwrt_packit.git
         git clone https://github.com/coolsnowwolf/lede.git
         wget https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-arm64.tar.gz
-        cd linux-6.0.y/
-        cp ../arm64-kernel-configs/config-6.0.2-flippy-78+  ./.config
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j12
     - name: complie kernel
       run: |
         #log "------------------编译内核开始------------------"
         cd linux-6.0.y/
+        ls ../arm64-kernel-configs/config-6*
         cp ../arm64-kernel-configs/config-6.0.2-flippy-78+  ./.config
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
         #make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
