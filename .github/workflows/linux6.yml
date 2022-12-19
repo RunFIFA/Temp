@@ -6,8 +6,8 @@ jobs:
     steps:
     - name: Installation depends
       run: |
-        warn() { echo -e "\e[31m$1 \e[0m"; }
         log() { echo -e "\e[32m$1 \e[0m"; }
+        warn() { echo -e "\e[31m$1 \e[0m"; }
         warn "------------------编译内核以及openwrt脚本------------------"
         log "------------------下载工具------------------"
         sudo apt update -y
@@ -22,6 +22,8 @@ jobs:
         sudo apt install gcc-aarch64-linux-gnu -y
     - name: Installation qemu
       run: |
+        log() { echo -e "\e[32m$1 \e[0m"; }
+        warn() { echo -e "\e[31m$1 \e[0m"; }
         log "安装qemu"
         wget https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-5/qemu-aarch64-static.tar.gz
         tar xzvf qemu-aarch64-static.tar.gz
@@ -29,6 +31,8 @@ jobs:
         sudo chmod +x /usr/bin/qemu-aarch64-static
     - name: Download enviroment
       run: |
+        log() { echo -e "\e[32m$1 \e[0m"; }
+        warn() { echo -e "\e[31m$1 \e[0m"; }
         log "------------------下载环境开始------------------"
         git clone https://github.com/unifreq/linux-6.0.y.git
         git clone https://github.com/unifreq/arm64-kernel-configs.git
@@ -37,6 +41,8 @@ jobs:
         wget https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-arm64.tar.gz
     - name: complie kernel
       run: |
+        log() { echo -e "\e[32m$1 \e[0m"; }
+        warn() { echo -e "\e[31m$1 \e[0m"; }
         log "------------------编译内核开始------------------"
         cd linux-6.0.y/
         ls ../arm64-kernel-configs/config-6*
