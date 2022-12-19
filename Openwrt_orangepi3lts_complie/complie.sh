@@ -151,3 +151,51 @@ cd ../
 # make menuconfig
 # export FORCE_UNSAFE_CONFIGURE=1
 # make V=s -j$(nproc)
+
+
+
+# 3.开始编译openwrt
+# sudo cp -a openwrt_packit /opt/openwrt_packit
+# sudo cp lede/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz /opt/openwrt_packit/
+# sudo mkdir /opt/kernel
+# sudo cp linux-6.0.y/output/dtb-allwinner-6.0.3-flippy-78+.tar.gz /opt/kernel/
+#注意，这一步的dtb-allwinner-6.0.3-flippy-78+.tar.gz是准备工作中生成的
+# sudo cp linux-6.0.y/output/boot-6.0.3-flippy-78+.tar.gz /opt/kernel/
+# sudo cp linux-6.0.y/output/header-6.0.3-flippy-78+.tar.gz /opt/kernel/
+# sudo cp linux-6.0.y/output/modules-6.0.3-flippy-78+.tar.gz /opt/kernel/
+# cd /opt/openwrt_packit/
+# sudo cp mk_h6_vplus.sh mk_orangepi3lts.sh
+# sudo ./mk_orangepi3lts.sh
+#执行完就生成了可用的openwrt镜像
+
+
+# sudo vim mk_orangepi3lts.sh
+	# BOARD=orangepi3lts
+	# FDT=/dtb/allwinner/sun50i-h6-orangepi-3-lts.dtb
+# sudo vim make.env
+	# KERNEL_VERSION="${module}"
+
+# 如果出现tar报错误，修改public_funcs文件，添加--no-same-owner参数
+# vim public_funcs
+	# function extract_allwinner_boot_files() {
+    # echo -n "释放 Kernel zImage、uInitrd 及 dtbs 压缩包 ... "
+    # (
+        # cd ${TGT_BOOT} && \
+            # cp "${BOOTFILES_HOME}"/* . && \
+            # tar xzf  "${BOOT_TGZ}" --no-same-owner && \
+            # rm -f initrd.img-${KERNEL_VERSION} && \
+            # cp vmlinuz-${KERNEL_VERSION} zImage && \
+            # cp uInitrd-${KERNEL_VERSION} uInitrd && \
+            # mkdir -p dtb/allwinner && \
+            # cd dtb/allwinner && \
+            # tar xzf "${DTBS_TGZ}" && \
+            # sync
+    # )
+    # if [ $? -ne 0 ];then
+        # echo "失败！"
+        # detach_loopdev
+        # exit 1
+    # else
+        # echo "完成"
+    # fi
+# }
