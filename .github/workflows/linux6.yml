@@ -2,7 +2,7 @@ name: Build Kernel
 on: push
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
     - name: Installation depends
       run: |        
@@ -40,7 +40,7 @@ jobs:
         cd linux-6.0.y/
         ls ../arm64-kernel-configs/config-6*
         cp ../arm64-kernel-configs/config-6.0.2-flippy-78+  ./.config
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+        #make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
         #make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j12
