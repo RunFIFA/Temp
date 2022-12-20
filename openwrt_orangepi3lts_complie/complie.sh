@@ -1,7 +1,6 @@
 #/bin/bash
 
 log() {	echo -e "\e[32m$1 \e[0m"; }
-
 warn() { echo -e "\e[31m$1 \e[0m"; }
 
 warn "------------------编译内核以及openwrt脚本------------------"
