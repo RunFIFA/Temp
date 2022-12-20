@@ -4,8 +4,6 @@ log() {	echo -e "\e[32m$1 \e[0m"; }
 warn() { echo -e "\e[31m$1 \e[0m"; }
 
 warn "------------------编译内核以及openwrt脚本------------------"
-
-
 # pre.下载工具
 log "------------------下载工具------------------"
 apt update -y
@@ -18,29 +16,62 @@ mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 
 rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev \
 gcc-aarch64-linux-gnu ncurses-dev qemu
 # 安装qemu
-log "安装qemu"
-if [ ! -e qemu-aarch64-static.tar.gz ]; then
-  wget https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-5/qemu-aarch64-static.tar.gz
-fi
-tar xzvf qemu-aarch64-static.tar.gz
-cp qemu-aarch64-static /usr/bin/
-chmod +x /usr/bin/qemu-aarch64-static
+# log "安装qemu"
+# if [ ! -e qemu-aarch64-static.tar.gz ]; then
+  # wget https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-5/qemu-aarch64-static.tar.gz
+# fi
+# tar xzvf qemu-aarch64-static.tar.gz
+# cp qemu-aarch64-static /usr/bin/
+# chmod +x /usr/bin/qemu-aarch64-static
+#安装gcc-aarch64-linux-gnu
+# log "安装gcc-aarch64-linux-gnu"
+# wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+# tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+# cp gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/* /usr/bin/
 
 
 # 1.下载环境
 log "------------------下载环境开始------------------"
-if [ ! -e linux-6.0.y ]; then
+if [ ! -d linux-6.0.y ]; then
   git clone https://ghproxy.com/https://github.com/unifreq/linux-6.0.y.git
+else
+  cd linux-6.0.y
+  git pull
+  cd ..
 fi
-if [ ! -e arm64-kernel-configs ]; then
+
+if [ ! -d arm64-kernel-configs ]; then
   git clone https://ghproxy.com/https://github.com/unifreq/arm64-kernel-configs.git
+else
+  cd arm64-kernel-configs
+  git pull
+  cd ..
 fi
-if [ ! -e openwrt_packit ]; then
+
+if [ ! -d openwrt_packit ]; then
   git clone https://ghproxy.com/https://github.com/unifreq/openwrt_packit.git
+else
+  cd openwrt_packit
+  git pull
+  cd ..
 fi
-if [ ! -e lede ]; then
+
+if [ ! -d openwrt ]; then
+  git clone https://ghproxy.com/https://github.com/openwrt/openwrt.git
+else
+  cd openwrt
+  git pull
+  cd ..
+fi
+
+if [ ! -d lede ]; then
   git clone https://ghproxy.com/https://github.com/coolsnowwolf/lede.git
+else
+  cd lede
+  git pull
+  cd ..
 fi
+
 if [ ! -e ubuntu-base-22.04-base-arm64.tar.gz ]; then
   wget https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-arm64.tar.gz
 fi
@@ -71,9 +102,11 @@ mkdir rootfs/lib/modules
 cp -a modules/lib/modules/${module} rootfs/lib/modules/
 mkdir rootfs/host
 cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
-# 进入子系统部分
 ######################################
+# 进入子系统部分
 log "进入子系统"
+warn "以下命令请手动执行...."
+exit
 chmod +x .././chmout.sh
 bash ../chmout.sh -m ./rootfs/
 echo "185.125.190.36 ports.ubuntu.com">/etc/hosts
