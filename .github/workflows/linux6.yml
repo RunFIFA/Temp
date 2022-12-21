@@ -59,9 +59,9 @@ jobs:
         cd linux-6.0.y/
         ls ../arm64-kernel-configs/config-6*
         cp ../arm64-kernel-configs/config-6.0.2-flippy-78+  ./.config
-        #make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
-        log "ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare"
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare
-        log "ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j12"
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j1
+        #make ARCH=arm64 CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- menuconfig
+        log "ARCH=arm64 CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- prepare"
+        make ARCH=arm64 CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- prepare
+        log "ARCH=arm64 CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- -j12"
+        make ARCH=arm64 CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- -j1
 
