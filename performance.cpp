@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
   
-int test( void )
+void test( void )
 {
     int count = 300000000;
     double testmun;
@@ -20,13 +20,14 @@ int test( void )
     double finishtime = clock();
     double duration = (double)(finishtime - begintime) / CLOCKS_PER_SEC;
     printf("Chind process Test time to do count is %f seconds, standard : 10s \n", duration);
+
 }
 
 
 int main() {
 
     pid_t pid;
-    int num_process = 1;
+    int num_process = 5;
     
     printf("Performance Test start, Parent, pid = %d\n",getpid());
     printf("Create %d child process to test...\n", num_process);

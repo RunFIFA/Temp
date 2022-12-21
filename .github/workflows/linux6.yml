@@ -24,9 +24,8 @@ jobs:
         libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \
         mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils \
         rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev \
-        ncurses-dev qemu
-        sudo apt install gcc-aarch64-linux-gnu -y
-    - name: Installation qemu
+        ncurses-dev
+    - name: Installation qemu and gcc-aarch64
       run: |
         log() { echo -e "\e[32m$1 \e[0m"; }
         warn() { echo -e "\e[31m$1 \e[0m"; }
@@ -35,6 +34,11 @@ jobs:
         tar xzvf qemu-aarch64-static.tar.gz
         sudo cp qemu-aarch64-static /usr/bin/
         sudo chmod +x /usr/bin/qemu-aarch64-static
+        log "安装gcc-aarch64-linux-gnu"
+        wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+        tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+        sudo cp gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/* /usr/bin/
+        sudo chmod +x /usr/bin/aarch64-linux-gnu-*
     - name: Download enviroment
       run: |
         log() { echo -e "\e[32m$1 \e[0m"; }

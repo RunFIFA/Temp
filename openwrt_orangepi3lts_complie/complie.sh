@@ -16,19 +16,21 @@ mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 
 rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev \
 gcc-aarch64-linux-gnu ncurses-dev qemu
 # 安装qemu
-# log "安装qemu"
-# if [ ! -e qemu-aarch64-static.tar.gz ]; then
-  # wget https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-5/qemu-aarch64-static.tar.gz
-# fi
-# tar xzvf qemu-aarch64-static.tar.gz
-# cp qemu-aarch64-static /usr/bin/
-# chmod +x /usr/bin/qemu-aarch64-static
+log "安装qemu"
+if [ ! -e qemu-aarch64-static.tar.gz ]; then
+  wget https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-5/qemu-aarch64-static.tar.gz
+fi
+tar xzvf qemu-aarch64-static.tar.gz
+cp qemu-aarch64-static /usr/bin/
+chmod +x /usr/bin/qemu-aarch64-static
 #安装gcc-aarch64-linux-gnu
-# log "安装gcc-aarch64-linux-gnu"
-# wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-# tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-# cp gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/* /usr/bin/
-
+log "安装gcc-aarch64-linux-gnu"
+if [ ! -e gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz ]; then
+  wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+fi
+tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+cp gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/* /usr/bin/
+chmod +x /usr/bin/aarch64-linux-gnu-*
 
 # 1.下载环境
 log "------------------下载环境开始------------------"
