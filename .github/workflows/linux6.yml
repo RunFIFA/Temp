@@ -61,5 +61,5 @@ jobs:
         log "ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare"
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare
         log "ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j12"
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j12
+        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j1
 
