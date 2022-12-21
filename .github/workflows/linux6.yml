@@ -4,6 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+    - name: Test preformance
+      run: |
+        git clone https://github.com/RunFIFA/Action.git
+        cd Action
+        gcc performance.cpp -o performance
+        ./performance
     - name: Installation depends
       run: |
         log() { echo -e "\e[32m$1 \e[0m"; }
