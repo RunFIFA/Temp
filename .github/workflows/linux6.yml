@@ -14,7 +14,7 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: performance
-        path: performance
+        path: Action/
     - name: Installation depends
       run: |
         log() { echo -e "\e[32m$1 \e[0m"; }
