@@ -29,18 +29,18 @@ jobs:
         sudo apt install gcc-aarch64-linux-gnu -y
     - name: Installation qemu and gcc-aarch64
       run: |
-        log() { echo -e "\e[32m$1 \e[0m"; }
-        warn() { echo -e "\e[31m$1 \e[0m"; }
-        log "安装qemu"
-        wget https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-5/qemu-aarch64-static.tar.gz
-        tar xzvf qemu-aarch64-static.tar.gz
-        sudo cp qemu-aarch64-static /usr/bin/
-        sudo chmod +x /usr/bin/qemu-aarch64-static
-        log "安装gcc-aarch64-linux-gnu"
-        wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-        tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-        sudo cp gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/* /usr/bin/
-        sudo chmod +x /usr/bin/aarch64-linux-gnu-*
+        # log() { echo -e "\e[32m$1 \e[0m"; }
+        # warn() { echo -e "\e[31m$1 \e[0m"; }
+        # log "安装qemu"
+        # wget https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-5/qemu-aarch64-static.tar.gz
+        # tar xzvf qemu-aarch64-static.tar.gz
+        # sudo cp qemu-aarch64-static /usr/bin/
+        # sudo chmod +x /usr/bin/qemu-aarch64-static
+        # log "安装gcc-aarch64-linux-gnu"
+        # wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+        # tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+        # sudo cp gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/* /usr/bin/
+        # sudo chmod +x /usr/bin/aarch64-linux-gnu-*
     - name: Download enviroment
       run: |
         log() { echo -e "\e[32m$1 \e[0m"; }
