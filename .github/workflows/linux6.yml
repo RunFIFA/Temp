@@ -64,4 +64,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: Output
-        path: linux-6.0.y
+        path: Output

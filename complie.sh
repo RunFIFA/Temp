@@ -105,19 +105,19 @@ complie_kernel_1() {
 complie_kernel_2() {
     
     echo "${green}开始编译kernel根文件系统${reset}"
-    mkdir modules
+    mkdir -p modules
     make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=modules modules_install
     #后续使用的modules版本在此处决定
     module=`ls modules/lib/modules`
-    mkdir rootfs
+    mkdir -p rootfs
     cd rootfs
     cp ../../ubuntu-base-22.04-base-arm64.tar.gz  ./
     tar -xf ubuntu-base-22.04-base-arm64.tar.gz
     rm -f ubuntu-base-22.04-base-arm64.tar.gz
     cd ..
-    mkdir rootfs/lib/modules
+    mkdir -p rootfs/lib/modules
     cp -a modules/lib/modules/${module} rootfs/lib/modules/
-    mkdir rootfs/host
+    mkdir -p rootfs/host
     cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
     # 进入子系统部分
     echo "${red}进入子系统${reset}"
@@ -243,7 +243,7 @@ main() {
   aoi=$(tput setaf 6)
   reset=$(tput sgr0)
   TMP_DIRECTORY="$(mktemp -d)/temp"
-  mkdir $TMP_DIRECTORY
+  mkdir -p $TMP_DIRECTORY
 
 
   echo "${red}------------------编译内核以及openwrt脚本------------------${reset}"
