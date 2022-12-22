@@ -10,11 +10,6 @@ jobs:
         cd Action
         gcc performance.cpp -o performance
         ./performance
-    - name : Upload artifact
-      uses: actions/upload-artifact@master
-      with:
-        name: performance
-        path: Action/
     - name: Installation depends
       run: |
         log() { echo -e "\e[32m$1 \e[0m"; }
@@ -69,4 +64,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: Output
-        path: Output
+        path: linux-6.0.y/Output
