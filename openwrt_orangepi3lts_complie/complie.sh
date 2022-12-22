@@ -79,6 +79,8 @@ if [ ! -e ubuntu-base-22.04-base-arm64.tar.gz ]; then
 fi
 
 
+
+
 # 2.编译内核
 log "------------------编译内核开始------------------"
 cd linux-6.0.y/
@@ -86,6 +88,18 @@ cp ../arm64-kernel-configs/config-6.0.2-flippy-78+  ./.config
 #make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j12
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # 3.编译生成需要的根文件系统
@@ -109,6 +123,8 @@ cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
 log "进入子系统"
 warn "以下命令请手动执行...."
 exit
+
+
 chmod +x .././chmout.sh
 bash ../chmout.sh -m ./rootfs/
 echo "185.125.190.36 ports.ubuntu.com">/etc/hosts
