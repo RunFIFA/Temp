@@ -59,7 +59,7 @@ jobs:
         cd linux-6.0.y/
         cp ../arm64-kernel-configs/config-6.0.2-flippy-78+  ./.config
         make ARCH=arm64 CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- prepare
-        make ARCH=arm64 CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- -j32
+        make ARCH=arm64 CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- -j$(nproc)
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
