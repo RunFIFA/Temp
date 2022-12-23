@@ -39,12 +39,15 @@ judgment_parameters() {
 }
 
 check_if_running_as_root() {
-    read -r -p "${red}是否使用非root用户进编译? [y/n] ${reset}" cont_without_been_root
-    if [[ x"${cont_without_been_root:0:1}" = x'y' ]]; then
-      echo "继续编译..."
-    else
-      echo "请使用root用户进行编译..."
-      exit 1
+   if [[ "$UID" -ne '0' ]]; then
+     echo "${red}当前非root用户,建议使用root用户执行${reset}"
+     read -r -p "${red}是否使用非root用户进编译? [y/n] ${reset}" cont_without_been_root
+     if [[ x"${cont_without_been_root:0:1}" = x'y' ]]; then
+       echo "继续编译..."
+      else
+        echo "请使用root用户进行编译..."
+        exit 1
+      fi
     fi
 }
 
@@ -93,11 +96,8 @@ complie_kernel_1() {
     echo "${green}开始编译kernel内核${reset}"
     cd linux-6.0.y/
     cp ../arm64-kernel-configs/config-6.0.2-flippy-78+  ./.config
-    #make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
-    # make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare
-    # make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
-    make ARCH=arm64 CROSS_COMPILE=../gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- prepare
-    make ARCH=arm64 CROSS_COMPILE=../gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- -j$(nproc)
+    make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- prepare
+    make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
 }
 
 ######################################
@@ -188,15 +188,15 @@ get_enviroment() {
     git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \
     libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \
     mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils \
-    rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev \
-    gcc-aarch64-linux-gnu ncurses-dev qemu u-boot-tools
-
-    echo "${green}开始拉取GitHub仓库${reset}"
+    rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+    apt install -y ncurses-dev qemu u-boot-tools gcc-aarch64-linux-gnu
+    
+	echo "${green}开始拉取GitHub仓库${reset}"
     github 'arm64-kernel-configs' 'https://ghproxy.com/https://github.com/unifreq/arm64-kernel-configs.git'
     github 'linux-6.0.y' 'https://ghproxy.com/https://github.com/unifreq/linux-6.0.y.git'
     github 'lede' 'https://ghproxy.com/https://github.com/coolsnowwolf/lede.git'
     github 'openwrt' 'https://ghproxy.com/https://github.com/openwrt/openwrt.git'
-    github 'openwrt_packit' 'clone https://ghproxy.com/https://github.com/unifreq/openwrt_packit.git'
+    github 'openwrt_packit' 'https://ghproxy.com/https://github.com/unifreq/openwrt_packit.git'
 
     echo "${green}开始下载编译工具${reset}"
     download 'ubuntu-base-22.04-base-arm64.tar.gz' 'https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-arm64.tar.gz'
@@ -210,28 +210,32 @@ get_enviroment() {
 }
 
 github() {
-    echo "${green}拉取$1...${reset}"
     if [ ! -d $1 ]; then
+      echo "${green}拉取$1...${reset}"
       git clone $2
     else
+      echo "${green}更新$1...${reset}"
       cd $1 && git pull
+	  cd ..
     fi
 }
 
 download() {
-    echo "${green}下载$1...${reset}"
     if [ ! -e $1 ]; then
-      wget $2 -o "${TMP_DIRECTORY}/$1"
-    fi
+      echo "${green}下载$1...${reset}"
+      wget $2 -o $1
+    else
+      echo "${green}$1已经存在${reset}"
+	fi
 }
 
 decompression() {
-    tar xzvf ${TMP_DIRECTORY}/qemu-aarch64-static.tar.gz
-    cp ${TMP_DIRECTORY}/qemu-aarch64-static /usr/bin/
+    tar xzvf qemu-aarch64-static.tar.gz -C .
+    cp qemu-aarch64-static /usr/bin/
     chmod +x /usr/bin/qemu-aarch64-static
 
-    tar -xf ${TMP_DIRECTORY}/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-    cp ${TMP_DIRECTORY}/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/* /usr/bin/
+    tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz -C .
+    cp gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/* /usr/bin/
     chmod +x /usr/bin/aarch64-linux-gnu-*
 }
 
@@ -242,7 +246,8 @@ main() {
   green=$(tput setaf 2)
   aoi=$(tput setaf 6)
   reset=$(tput sgr0)
-  TMP_DIRECTORY="$(mktemp -d)/temp"
+  #TMP_DIRECTORY="$(mktemp -d)/temp"
+  TMP_DIRECTORY="/tmp/openwrt"
   mkdir -p $TMP_DIRECTORY
 
 
