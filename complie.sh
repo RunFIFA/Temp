@@ -103,9 +103,9 @@ complie_kernel_1() {
 ######################################
 # 编译 kernel 根文件系统
 complie_kernel_2() {
-    
     echo "${green}开始编译kernel根文件系统${reset}"
-    mkdir -p modules
+    cd linux-6.0.y/
+	mkdir -p modules
     make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=modules modules_install
     #后续使用的modules版本在此处决定
     module=`ls modules/lib/modules`
@@ -122,15 +122,15 @@ complie_kernel_2() {
     # 进入子系统部分
     echo "${red}进入子系统${reset}"
     echo "${red}以下命令请手动执行....${reset}"
-    exit
+	chmod +x .././chmout.sh
+    bash ../chmout.sh -m ./rootfs/
 }
 
 ######################################
 # 编译 kernel boot
 complie_kernel_3() {
     echo "${green}开始编译kernel boot${reset}"
-    chmod +x .././chmout.sh
-    bash ../chmout.sh -m ./rootfs/
+    cd linux-6.0.y/
     echo "185.125.190.36 ports.ubuntu.com">/etc/hosts
     chmod 777 /tmp
     apt update -y
@@ -150,7 +150,8 @@ complie_kernel_3() {
 # 打包根文件系统 boot,header,modules,dtb
 complie_kernel_4() {
     echo "${green}打包根文件系统 boot,header,modules,dtb${reset}"
-    bash ../chmout.sh -u ./rootfs/
+    cd linux-6.0.y/
+	bash ../chmout.sh -u ./rootfs/
     mkdir -p output/{boot,header,modules,dtb}
     cp -a rootfs/lib/modules/${module} output/modules
     cp -a rootfs/boot/{initrd.img-${module},uInitrd-${module}} output/boot/
