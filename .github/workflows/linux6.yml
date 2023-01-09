@@ -1,5 +1,5 @@
 name: Build Kernel
-on: push
+on: release
 jobs:
   build:
     runs-on: ubuntu-22.04
