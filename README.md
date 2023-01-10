@@ -1,2 +1,1 @@
-try to build-openwrt
-
+for my try
