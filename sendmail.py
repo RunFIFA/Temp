@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
  
 my_sender='779770838@qq.com'
-my_pass = 'wjqcrfcrympebfbb'
+my_pass = 'xxxxxxxxxxxxxxxx'
 my_user='373665997@qq.com'
 
 def mail():
@@ -31,7 +31,3 @@ if ret:
 else:
     print("邮件发送失败")
 
-    
-    
-# POP/STMP: uliyybcgoowybccf
-# IMAP/SMTP:wjqcrfcrympebfbb

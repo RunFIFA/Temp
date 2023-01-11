@@ -5,6 +5,12 @@ from __future__ import print_function
 import requests
 import time
 import random
+
+accountList = (
+    ["account", "passwd"],
+    ["account", "passwd"]
+)
+
 headers = {
     'authority': 'neworld.cloud',
     'accept': 'application/json, text/javascript, */*; q=0.01',
@@ -20,8 +26,8 @@ headers = {
     'x-requested-with': 'XMLHttpRequest',
 }
 
-def getCookie(passwd):
-    print("-------------开始登录-------------------")
+def getCookie(account, passwd):
+    print("---------开始登录---------")
     
     timestamp = str( int(str(time.time()).split('.')[0]) + 86400 )
     cookies = {
@@ -30,7 +36,7 @@ def getCookie(passwd):
     
     data = {
         'code': '',
-        'email': '373665997@qq.com',
+        'email': account,
         'passwd': passwd,
         'fingerprint': '4fa3d911e01ebb8d175c6ab3ec8f0579', }
         
@@ -40,7 +46,7 @@ def getCookie(passwd):
 
 
 def checkin(cookies):
-    print("-------------开始签到-------------------")
+    print("---------开始签到---------")
     
     response = requests.post('https://neworld.cloud/user/checkin', cookies=cookies, headers=headers)
     return response
@@ -52,18 +58,16 @@ def getinform(response):
     print( response.url, response.status_code, response.reason, response.encoding, response.apparent_encoding, response.text )
     print("认证信息:", end="")
     print( requests.utils.dict_from_cookiejar(response.cookies) )
-    print()
 
 
 if __name__=='__main__':
-    try:
-        print("-------------欢迎使用Neworld签到脚本-------------------")
+    print("---------------------欢迎使用Neworld签到脚本---------------------------")
+    for account, passwd in accountList:
+        print("------------------- %s 开始签到--------------------------" % account)
         time.sleep( random.randint(1,10) )  #防检测，防crontab固定时间执行
-        response, cookies  = getCookie( input('请输入密码:') )
+        response, cookies  = getCookie( account, passwd )
         getinform(response)
         
         time.sleep( random.randint(3,10) )  #防检测
         response = checkin(cookies)
         getinform(response)
-    except:
-        print("签到失败")
