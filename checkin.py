@@ -5,6 +5,8 @@ from __future__ import print_function
 import requests
 import time
 import random
+import sys
+import traceback
 
 accountList = (
     ["account", "passwd"],
@@ -27,7 +29,7 @@ headers = {
 }
 
 def getCookie(account, passwd):
-    print("---------开始登录---------")
+    print('\033[94m'"---------开始登录---------"+'\033[0m')
     
     timestamp = str( int(str(time.time()).split('.')[0]) + 86400 )
     cookies = {
@@ -46,28 +48,34 @@ def getCookie(account, passwd):
 
 
 def checkin(cookies):
-    print("---------开始签到---------")
+    print('\033[94m'+"---------开始签到---------"+'\033[0m')
     
     response = requests.post('https://neworld.cloud/user/checkin', cookies=cookies, headers=headers)
     return response
 
 
 def getinform(response):
-    print(eval(response.text)['msg'])
-    print("返回信息:", end="")
+    print("返回信息:" + str(eval(response.text)['msg']) )
+    print("返回参数:", end="")
     print( response.url, response.status_code, response.reason, response.encoding, response.apparent_encoding, response.text )
     print("认证信息:", end="")
     print( requests.utils.dict_from_cookiejar(response.cookies) )
 
 
 if __name__=='__main__':
-    print("---------------------欢迎使用Neworld签到脚本---------------------------")
+    print('\033[91m'+"---------------------------欢迎使用Neworld签到脚本---------------------------"+'\033[0m')
     for account, passwd in accountList:
-        print("------------------- %s 开始签到--------------------------" % account)
-        time.sleep( random.randint(1,10) )  #防检测，防crontab固定时间执行
-        response, cookies  = getCookie( account, passwd )
-        getinform(response)
-        
-        time.sleep( random.randint(3,10) )  #防检测
-        response = checkin(cookies)
-        getinform(response)
+        try:
+            print('\033[92m'+"------------------------------ %s 开始签到------------------------------" % account +'\033[0m')
+            time.sleep( random.randint(1,10) )  #防检测，防crontab固定时间执行
+            response, cookies  = getCookie( account, passwd )
+            getinform(response)
+            
+            time.sleep( random.randint(3,10) )  #防检测
+            response = checkin(cookies)
+            getinform(response)
+        except Exception as e:
+            print('\033[91m'+"%s 签到失败, 错误信息如下:" % account +'\033[0m')
+            print(e)
+            print(sys.exc_info())
+            continue
