@@ -4,7 +4,7 @@
 from __future__ import print_function
 import requests
 import time
-
+import random
 headers = {
     'authority': 'neworld.cloud',
     'accept': 'application/json, text/javascript, */*; q=0.01',
@@ -20,7 +20,7 @@ headers = {
     'x-requested-with': 'XMLHttpRequest',
 }
 
-def getCookie():
+def getCookie(passwd):
     print("-------------开始登录-------------------")
     
     timestamp = str( int(str(time.time()).split('.')[0]) + 86400 )
@@ -30,8 +30,8 @@ def getCookie():
     
     data = {
         'code': '',
-        'email': 'xxxxxx@qq.com',
-        'passwd': 'xxxxxx',
+        'email': '373665997@qq.com',
+        'passwd': passwd,
         'fingerprint': '4fa3d911e01ebb8d175c6ab3ec8f0579', }
         
     response = requests.post('https://neworld.cloud/auth/login', cookies=cookies, headers=headers, data=data)
@@ -48,18 +48,21 @@ def checkin(cookies):
 
 def getinform(response):
     print(eval(response.text)['msg'])
-    
     print("返回信息:", end="")
     print( response.url, response.status_code, response.reason, response.encoding, response.apparent_encoding, response.text )
     print("认证信息:", end="")
     print( requests.utils.dict_from_cookiejar(response.cookies) )
+    print()
 
 
 if __name__=='__main__':
     try:
-        response, cookies  = getCookie()
+        print("-------------欢迎使用Neworld签到脚本-------------------")
+        time.sleep( random.randint(1,10) )  #防检测，防crontab固定时间执行
+        response, cookies  = getCookie( input('请输入密码:') )
         getinform(response)
         
+        time.sleep( random.randint(3,10) )  #防检测
         response = checkin(cookies)
         getinform(response)
     except:
