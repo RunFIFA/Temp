@@ -6,7 +6,7 @@ import requests
 import time
 import random
 import sys
-import traceback
+
 
 accountList = (
     ["account", "passwd"],
