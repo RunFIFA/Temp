@@ -1,0 +1,13 @@
+[Unit]
+Description = Screen
+After = network.target
+
+[Service]
+type=simple
+ExecStart = /usr/bin/python -B python Screen.py
+WorkingDirectory = /home/pi/Always
+Restart = always
+RestartSec = 5
+
+[Install]
+WantedBy=multi-user.target
