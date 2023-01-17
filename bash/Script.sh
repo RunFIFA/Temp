@@ -3,7 +3,7 @@
 function run()
 {
   sudo pkill python
-  for f in /home/pi/Work/Always/*.py
+  for f in /home/luo/Work/Always/*.py
   do 
     sudo python -B "$f" &
 	echo $f has start
