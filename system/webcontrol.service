@@ -5,7 +5,7 @@ After = network.target
 [Service]
 Type=simple
 ExecStart = /usr/bin/python3 -B /home/luo/Work/Always/WebControl.py
-WorkingDirectory = /home/luo/Work/Always/
+WorkingDirectory = /home/luo/Work
 Restart = always
 RestartSec = 5
 

@@ -1,10 +1,10 @@
 [Unit]
-Description = screen
+Description = autopush_Work
 After = network.target
 
 [Service]
 Type=simple
-ExecStart = /usr/bin/python3 -B /home/luo/Work/Always/Screen.py
+ExecStart = autopush
 WorkingDirectory = /home/luo/Work
 Restart = always
 RestartSec = 5
