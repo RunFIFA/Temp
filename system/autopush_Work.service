@@ -4,7 +4,7 @@ After = network.target
 
 [Service]
 Type=simple
-ExecStart = autopush
+ExecStart = /usr/bin/bash /etc/systemd/system/autopush.sh
 WorkingDirectory = /home/luo/Work
 Restart = always
 RestartSec = 5
