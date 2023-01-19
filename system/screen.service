@@ -8,7 +8,7 @@ ExecStart = /usr/bin/python3 -B /home/luo/Work/Always/Screen.py
 WorkingDirectory = /home/luo/Work
 Restart = always
 RestartSec = 5
-User=luo
+User=root
 
 [Install]
 WantedBy=multi-user.target

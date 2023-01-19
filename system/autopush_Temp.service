@@ -8,7 +8,7 @@ ExecStart = /usr/bin/bash /etc/systemd/system/autopush.sh
 WorkingDirectory = /home/luo/Temp
 Restart = always
 RestartSec = 5
-User=luo
+User=root
 
 [Install]
 WantedBy=multi-user.target
