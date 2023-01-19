@@ -26,6 +26,7 @@ function push()
     then
       echo "$result"
       warn "git push failed, try again..."
+      sleep 3s
     else
       echo "$result"
       break
@@ -43,6 +44,7 @@ function pull()
     then
       echo "$result"
       warn "git pull failed, try again..."
+      sleep 3s
     else    
       echo "$result"
       break
