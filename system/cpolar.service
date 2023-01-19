@@ -8,6 +8,7 @@ ExecStart = cpolar tcp 22
 WorkingDirectory = /home/luo/Work
 Restart = always
 RestartSec = 5
+User=luo
 
 [Install]
 WantedBy=multi-user.target
