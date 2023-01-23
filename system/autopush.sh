@@ -56,6 +56,7 @@ function autopush()
 {
   while true
   do
+    log "--------------------------start to upgrade-------------------------!"
     log "------------------start to pull------------------!"
     pull
     log "------------------start to push------------------!"
