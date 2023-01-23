@@ -62,7 +62,7 @@ function autopush()
     log "------------------start to push------------------!"
     push
     log "------------------start to wait------------------!"
-    date=`date '+%F %T' --date="+6 hour"`
+    date=`date '+%F %T' --date="+4 hour"`
     echo "waiting for 4 hour ..."
     echo  $date will sync again
     sleep 4h
