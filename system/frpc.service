@@ -1,0 +1,14 @@
+[Unit]
+Description = frpc
+After = network.target
+
+[Service]
+Type=simple
+ExecStart = /home/luo/Work/Frp/frpc -c /home/luo/Work/Frp/frpc.ini
+WorkingDirectory = /home/luo/Work/Frp
+Restart = always
+RestartSec = 5
+User=root
+
+[Install]
+WantedBy=multi-user.target

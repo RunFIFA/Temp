@@ -11,7 +11,7 @@ function push()
     time=`date '+%F %T'`
     
     result=`git status 2>&1`
-    if [[ "$result" =~ "Changes" || "$result" =~ "push" ]]
+    if [[ "$result" =~ "Changes" || "$result" =~ "push" || "$result" =~ "add" ]]
     then
       echo "$result"
     else
