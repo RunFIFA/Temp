@@ -3,8 +3,8 @@
 show_help() {
   echo "usage: $0 [--enviroment | --kernel 1 | 2 | 3 | 4 ]"
   echo '  -e, --enviroment  下载环境'
-  echo '  -o, --openwrt     编译openwrt'
   echo '  -k, --kernel      编译kernel'
+  echo '  -o, --openwrt     编译openwrt'
   exit 0
 }
 
@@ -183,7 +183,7 @@ get_enviroment() {
     
     echo "${green}开始下载必要软件包${reset}"
     apt update -y
-    apt full-upgrade -y
+    apt upgrade -y
     apt install -y ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential \
     bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
     git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \
