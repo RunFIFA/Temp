@@ -24,7 +24,7 @@ void test( void )
 
 int main() {
     pid_t pid;
-    for ( int num_process = 1; num_process <= 10; num_process++)
+    for ( int num_process = 1; num_process <= 8; num_process++)
     {
         
         printf(" ------------------------ Performance Test %d ------------------------ \n",num_process);
